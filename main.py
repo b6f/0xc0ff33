@@ -1,4 +1,5 @@
 import sys
+from random import randint
 from PyQt5 import QtWidgets, QtGui, uic, QtCore
 
 
@@ -22,8 +23,11 @@ class W(QtWidgets.QMainWindow):
         painter.begin(self)
         painter.setBrush(QtGui.QColor(255, 255, 0))
 
-        painter.drawEllipse(QtCore.QPoint(70, 80), 30., 30.)
-        painter.drawEllipse(QtCore.QPoint(100, 200), 50., 50.)
+        r = float(randint(10, 50))
+        r1 = float(randint(10, 50))
+
+        painter.drawEllipse(QtCore.QPoint(70, 80), r, r)
+        painter.drawEllipse(QtCore.QPoint(100, 200), r1, r1)
 
         painter.end()
 
