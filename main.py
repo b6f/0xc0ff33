@@ -1,35 +1,31 @@
 import sys
-from random import randint
-from PyQt5 import QtWidgets, QtGui, uic, QtCore
+import sqlite3
+from PyQt5 import QtWidgets, uic
 
 
 class W(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
-        self.pushButton.clicked.connect(self.draw_circles)
-        self.do_draw = False
+        uic.loadUi('main.ui', self)
+        self.tableWidget.setColumnCount(7)
 
-    def draw_circles(self):
-        self.do_draw = True
-        self.repaint()
+        for i, name in enumerate(('ID', 'Название сорта', 'Степень обжарки', 'Молотый/в зернах',
+                                  'Описание вкуса', 'Цена', 'Объем упаковки')):
+            self.tableWidget.setHorizontalHeaderItem(i, QtWidgets.QTableWidgetItem(name))
+            self.tableWidget.setColumnWidth(i, 160)
 
-    def paintEvent(self, a0):
-        if not self.do_draw:
-            return
-        self.do_draw = False
+        conn = sqlite3.connect('coffee.sqlite')
+        cur = conn.cursor()
 
-        painter = QtGui.QPainter()
-        painter.begin(self)
-        painter.setBrush(QtGui.QColor(255, 255, 0))
+        types = cur.execute("""SELECT title FROM types""").fetchall()
+        fired = cur.execute("""SELECT name FROM fired""").fetchall()
+        data = cur.execute("""SELECT * FROM catalog""").fetchall()
 
-        r = float(randint(10, 50))
-        r1 = float(randint(10, 50))
 
-        painter.drawEllipse(QtCore.QPoint(70, 80), r, r)
-        painter.drawEllipse(QtCore.QPoint(100, 200), r1, r1)
 
-        painter.end()
+        conn.close()
+
+        # print(data)
 
 
 app = QtWidgets.QApplication(sys.argv)

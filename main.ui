@@ -6,25 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
-    <height>312</height>
+    <width>1200</width>
+    <height>411</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>113</width>
-      <height>32</height>
+      <x>10</x>
+      <y>10</y>
+      <width>1190</width>
+      <height>391</height>
      </rect>
-    </property>
-    <property name="text">
-     <string>нарисовать</string>
     </property>
    </widget>
   </widget>
