@@ -1,13 +1,17 @@
 import sys
 import sqlite3
-from PyQt5 import QtWidgets, uic, QtCore
+from PyQt5 import QtWidgets, QtCore
+
+from addEditCoffeeForm import Ui_Form as AddEdit
+from main_interface import Ui_MainWindow as MainWindow
 
 
-class Add(QtWidgets.QMainWindow):
+class Add(QtWidgets.QMainWindow, AddEdit):
     def __init__(self, parent, types, fire_types, add_callback):
         super().__init__(parent)
 
-        c = uic.loadUi('addEditCoffeeForm.ui', self)
+        super().setupUi(self)
+
         c.show()
 
         self.type_name.addItems(types)
@@ -28,10 +32,12 @@ class Add(QtWidgets.QMainWindow):
         self.done_cb(zid, type_name, fired_type, ground, td, price, vol)
 
 
-class W(QtWidgets.QMainWindow):
+class W(QtWidgets.QMainWindow, MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
+
+        super().setupUi(self)
+
         self.tableWidget.setColumnCount(7)
 
         for i, name in enumerate(('ID', 'Название сорта', 'Степень обжарки', 'Молотый/в зернах',
@@ -39,7 +45,7 @@ class W(QtWidgets.QMainWindow):
             self.tableWidget.setHorizontalHeaderItem(i, QtWidgets.QTableWidgetItem(name))
             self.tableWidget.setColumnWidth(i, 160)
 
-        self.conn = sqlite3.connect('coffee.sqlite')
+        self.conn = sqlite3.connect('data/coffee.sqlite')
         cur = self.conn.cursor()
 
         self.addButton.clicked.connect(self.open_add)
